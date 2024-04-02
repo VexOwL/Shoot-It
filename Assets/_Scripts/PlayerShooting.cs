@@ -1,9 +1,12 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerShooting : MonoBehaviour
 {
+    [SerializeField] private float _fireDelay = 0.2f;
     private InputSystem InputSystem;
+    private bool _isShooting, _isAllowedToShoot = true;
 
     private void Awake()
     {
@@ -13,11 +16,20 @@ public class PlayerShooting : MonoBehaviour
 
     private void Update()
     {
-        InputSystem.Player.Shoot.performed += Player_Shoot;
+        _isShooting = Convert.ToBoolean(InputSystem.Player.Shoot.ReadValue<float>());
+
+        if (_isShooting && _isAllowedToShoot)
+        {
+            BulletsPool.Instance.CreateBullet();
+            
+            _isAllowedToShoot = false;
+            StartCoroutine(FireDelay());
+        }
     }
 
-    private void Player_Shoot(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    IEnumerator FireDelay()
     {
-        BulletsPool.Instance.CreateBullet();
+        yield return new WaitForSeconds(_fireDelay);
+        _isAllowedToShoot = true;
     }
 }

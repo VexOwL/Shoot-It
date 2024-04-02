@@ -22,5 +22,12 @@ public class BulletsPool : MonoBehaviour
     public void CreateBullet()
     {
         var bullet = _pool.GetFreeElement();
+        bullet.transform.position = transform.position;
+        bullet.transform.rotation = transform.rotation;
+    }
+
+    public void ReturnBullet(Bullet bullet)
+    {
+        bullet.transform.position = transform.position;
     }
 }

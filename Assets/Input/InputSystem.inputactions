@@ -25,12 +25,12 @@
                 },
                 {
                     "name": "Shoot",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "73c62ed3-4bef-4f69-849c-d3b7e06826f8",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [

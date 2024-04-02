@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
         PlayerRb = GetComponent<Rigidbody2D>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         _moveVector = InputSystem.Player.Movement.ReadValue<Vector2>().normalized;
         PlayerRb.AddForce(_moveVector * _speed);
