@@ -20,11 +20,21 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         _moveVector = InputSystem.Player.Movement.ReadValue<Vector2>().normalized;
-        PlayerRb.AddForce(_moveVector * _speed);
+        Move();
 
         _rotationVector = InputSystem.Player.Rotation.ReadValue<Vector2>();
-        Vector3 _pointerVector = new Vector3(_rotationVector.x, _rotationVector.y, 0);
-        
+        RotateByPointer();
+    }
+
+    private void Move()
+    {
+        PlayerRb.AddForce(_moveVector * _speed);
+    }
+
+    private void RotateByPointer()
+    {
+        Vector3 _pointerVector = _rotationVector;
+
         _pointerPositionDifference = Camera.main.ScreenToWorldPoint(_pointerVector) - transform.position;
         _rotationAngle = Mathf.Atan2(_pointerPositionDifference.y, _pointerPositionDifference.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, _rotationAngle);

@@ -17,10 +17,16 @@ public class Bullet : MonoBehaviour
     {
         transform.Translate(_speed * Time.fixedDeltaTime, 0, 0);
 
-        _impacted = Physics2D.CapsuleCast(transform.position, _bulletSize, CapsuleDirection2D.Horizontal, transform.rotation.z, _castDirection, _capsuleCastLayer);
+        RaycastHit2D castHit = Physics2D.CapsuleCast(transform.position, _bulletSize, CapsuleDirection2D.Horizontal, transform.rotation.z, _castDirection, _capsuleCastLayer);
+        Collider2D hitCollider = castHit.collider;
 
-        if (_impacted)
+        if (hitCollider != null)
         {
+            if(hitCollider.TryGetComponent(out IDamagable enemy))
+            {
+                enemy.ReceiveDamage();
+            }
+
             gameObject.SetActive(false);
             BulletsPool.Instance.ReturnBullet(this);
         }
