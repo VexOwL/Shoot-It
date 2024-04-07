@@ -2,29 +2,37 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    [SerializeField] private float _speed = 2;
+    [SerializeField] private float _speed = 20;
     [SerializeField] private Transform _bulletVisual;
-    [SerializeField] private LayerMask _capsuleCastLayer = 0;
-    private Vector2 _castDirection = new Vector2(0, 0), _bulletSize;
-    private bool _impacted;
+    [SerializeField] private LayerMask _layerMask;
+    private Vector2 _castDirection = Vector2.zero, _bulletSize;
+    private float _castDistance = 0;
 
-    private void Start()
+    public void Start()
     {
-        _bulletSize = new Vector2(_bulletVisual.localScale.x, _bulletVisual.localScale.y);
+        _bulletSize = _bulletVisual.localScale;
     }
 
     private void FixedUpdate()
     {
         transform.Translate(_speed * Time.fixedDeltaTime, 0, 0);
+    }
 
-        RaycastHit2D castHit = Physics2D.CapsuleCast(transform.position, _bulletSize, CapsuleDirection2D.Horizontal, transform.rotation.z, _castDirection, _capsuleCastLayer);
+    private void Update()
+    {
+        Raycast();
+    }
+
+    public void Raycast()
+    {
+        RaycastHit2D castHit = Physics2D.CapsuleCast(transform.position, _bulletSize, CapsuleDirection2D.Horizontal, transform.rotation.z, _castDirection, _castDistance, _layerMask);
         Collider2D hitCollider = castHit.collider;
 
         if (hitCollider != null)
         {
-            if(hitCollider.TryGetComponent(out IDamagable enemy))
+            if (hitCollider.TryGetComponent(out IDamageable target))
             {
-                enemy.ReceiveDamage();
+                target.ReceiveDamage();
             }
 
             gameObject.SetActive(false);

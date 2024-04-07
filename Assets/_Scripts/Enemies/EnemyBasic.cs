@@ -1,52 +1,28 @@
 using UnityEngine;
 
-public class EnemyBasic : Enemy, IDamagable
+public class EnemyBasic : Enemy
 {
-    [SerializeField] private float _healthMax = 5;
-    [SerializeField] private GameObject _enemyVisual, _enemyDeadVisual;
-    private bool _isAlive = true;
-    private float _health;
-    private Vector3 _deadPosition = new Vector3(0, 0, 3);
     private BoxCollider2D Collider;
 
-    public override void Awake()
+    private void Awake()
     {
-        base.Awake();
+        EnemyRb = GetComponent<Rigidbody2D>();
         Collider = GetComponent<BoxCollider2D>();
     }
 
-    private void Start()
+    public override void Update()
     {
-        _health = _healthMax;
+        base.Update();
+        
+        Collider.enabled = IsAlive;
     }
 
-    private void FixedUpdate()
+    
+    public void OnCollisionStay2D(Collision2D other)
     {
-        if (_isAlive)
-            MoveToPlayer();
-    }
-
-    private void Update()
-    {
-        if (_health <= 0)
+        if (other.gameObject.GetComponent<Player>())
         {
-            Death();
+            Destroy(other.gameObject);
         }
-    }
-
-    private void Death()
-    {
-        _isAlive = false;
-        Collider.enabled = false;
-        transform.position += _deadPosition;
-        _enemyDeadVisual.SetActive(true);
-        _enemyVisual.SetActive(false);
-    }
-
-    public void ReceiveDamage()
-    {
-        _health--;
-        Debug.Log(_health);
-        _enemyVisual.transform.localScale = new Vector3(_health / _healthMax, _health / _healthMax, _health / _healthMax);
     }
 }

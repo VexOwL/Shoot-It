@@ -5,13 +5,17 @@ using UnityEngine;
 public class PlayerShooting : MonoBehaviour
 {
     [SerializeField] private float _fireDelay = 0.2f;
+    [SerializeField] private Transform _gun;
     private InputSystem InputSystem;
+    private BulletsPool BulletsPool;
     private bool _isShooting, _isAllowedToShoot = true;
 
     private void Awake()
     {
         InputSystem = new InputSystem();
         InputSystem.Player.Enable();
+
+        BulletsPool = GetComponent<BulletsPool>();
     }
 
     private void Update()
@@ -20,8 +24,8 @@ public class PlayerShooting : MonoBehaviour
 
         if (_isShooting && _isAllowedToShoot)
         {
-            BulletsPool.Instance.CreateBullet();
-            
+            BulletsPool.CreateBullet(_gun.position);
+
             _isAllowedToShoot = false;
             StartCoroutine(FireDelay());
         }

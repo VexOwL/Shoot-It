@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
@@ -7,10 +8,17 @@ public class LevelManager : MonoBehaviour
     private void Awake()
     {
         InputSystem = new InputSystem();
+        InputSystem.Player.Enable();
     }
 
     private void Start()
     {
-        //InputSystem.Player.
+        InputSystem.Player.Restart.performed += Input_Restart;
+    }
+
+    private void Input_Restart(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        string currentScene = SceneManager.GetActiveScene().name;
+        SceneManager.LoadScene(currentScene);
     }
 }

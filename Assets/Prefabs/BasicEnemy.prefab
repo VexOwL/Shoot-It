@@ -9,9 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3816142788826283008}
+  - component: {fileID: 3280998185696918003}
   - component: {fileID: 4875768177642671829}
-  m_Layer: 0
-  m_Name: BasicEnemy_Dead
+  m_Layer: 6
+  m_Name: BasicEnemy_Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,6 +33,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1630748105432893154}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3280998185696918003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1559166637275091625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 468ac3b1649ab3e458e32d8c57a0a414, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enemy: {fileID: 7245493592701740499}
+  _enemyHealth: {fileID: 8013160308946715202}
+  _secondsToAppear: 1
 --- !u!212 &4875768177642671829
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -96,7 +112,7 @@ GameObject:
   - component: {fileID: 7245493592701740499}
   - component: {fileID: 6757288915739075643}
   - component: {fileID: 1630092167331748493}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BasicEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -112,7 +128,7 @@ Transform:
   m_GameObject: {fileID: 4092447830650951228}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.71, y: 3.97, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -132,10 +148,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f09711da401f3c46bcebdfa1355f4c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 0.01
+  _speed: 0.1
   _health: 5
-  _enemyVisual: {fileID: 0}
-  _enemyDeadVisual: {fileID: 1559166637275091625}
 --- !u!50 &6757288915739075643
 Rigidbody2D:
   serializedVersion: 4
@@ -218,7 +232,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6761827630980456877}
   - component: {fileID: 6182535068889422666}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BasicEnemy_Health
   m_TagString: Untagged
   m_Icon: {fileID: 0}
