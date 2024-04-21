@@ -13,16 +13,28 @@ public class EnemyBasic : Enemy
     public override void Update()
     {
         base.Update();
-        
+
         Collider.enabled = IsAlive;
     }
 
-    
-    public void OnCollisionStay2D(Collision2D other)
+    private void FixedUpdate()
     {
+        if (IsAlive)
+            Move();
+    }
+
+    public void OnCollisionEnter2D(Collision2D other)
+    {
+        float pushForce = 2;
+
         if (other.gameObject.GetComponent<Player>())
         {
-            Destroy(other.gameObject);
+            Player player = other.gameObject.GetComponent<Player>();
+            player.ReceiveDamage();
+        }
+        else if (!other.gameObject.GetComponent<Bullet>())
+        {
+            EnemyRb.AddForce((transform.position - other.transform.position) * pushForce, ForceMode2D.Impulse);
         }
     }
 }

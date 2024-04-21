@@ -1,10 +1,11 @@
+using System;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    [SerializeField] private float _speed = 20;
     [SerializeField] private Transform _bulletVisual;
     [SerializeField] private LayerMask _layerMask;
+    [NonSerialized] public float Speed = 20;
     private Vector2 _castDirection = Vector2.zero, _bulletSize;
     private float _castDistance = 0;
 
@@ -15,7 +16,7 @@ public class Bullet : MonoBehaviour
 
     private void FixedUpdate()
     {
-        transform.Translate(_speed * Time.fixedDeltaTime, 0, 0);
+        transform.Translate(Speed * Time.fixedDeltaTime, 0, 0);
     }
 
     private void Update()

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3374828433383986091}
   - component: {fileID: 7100318149616004845}
   - component: {fileID: 7831529500364953699}
+  - component: {fileID: 4866268296485217870}
   - component: {fileID: 8373303304666546960}
   - component: {fileID: 8795349687140444434}
   m_Layer: 7
@@ -29,7 +30,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2502099076105007412}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -76,7 +77,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _fireDelay: 0.2
+  _bulletSpeed: 30
   _gun: {fileID: 7018063692057845954}
+--- !u!114 &4866268296485217870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2502099076105007412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8348b442c2f54e42aeaa64ff07b98af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _size: 15
+  _autoExpand: 1
+  _prefab: {fileID: 8519100539068811505, guid: 27e6bbca45d0b6648b9d9fefd8dfd955, type: 3}
 --- !u!50 &8373303304666546960
 Rigidbody2D:
   serializedVersion: 4

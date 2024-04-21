@@ -2,14 +2,17 @@ using UnityEngine;
 
 public class EnemyVisual : MonoBehaviour
 {
-    [SerializeField] Enemy _enemy;
+    [SerializeField] private Enemy Enemy;
     [SerializeField] private GameObject _enemyHealth;
     [SerializeField] private float _secondsToAppear = 1;
-    private Vector3 _healthScale;
+    private float _healthScale;
     private bool _isAppeared = false;
+    private Vector3 _healthSize;
 
     private void Start()
     {
+        _healthSize = _enemyHealth.transform.localScale;
+
         _enemyHealth.transform.localScale = Vector3.zero;
     }
 
@@ -17,13 +20,13 @@ public class EnemyVisual : MonoBehaviour
     {
         if (_isAppeared == false)
         {
-            if (_enemyHealth.transform.localScale.x < 1 && _enemyHealth.transform.localScale.y < 1)
+            if (_enemyHealth.transform.localScale.x < _healthSize.x && _enemyHealth.transform.localScale.y < _healthSize.y)
             {
                 _enemyHealth.transform.localScale += new Vector3(Time.deltaTime / _secondsToAppear, Time.deltaTime / _secondsToAppear, 0);
             }
             else
             {
-                _enemy.IsAlive = true;
+                Enemy.IsAlive = true;
                 _isAppeared = true;
             }
         }
@@ -32,7 +35,7 @@ public class EnemyVisual : MonoBehaviour
             VisualizeHealth();
         }
 
-        if (_enemy.HealthCurrent <= 0)
+        if (Enemy.HealthCurrent <= 0)
         {
             DeathVisual();
         }
@@ -40,8 +43,9 @@ public class EnemyVisual : MonoBehaviour
 
     public void VisualizeHealth()
     {
-        _healthScale = new Vector3(_enemy.HealthCurrent / _enemy.HealthMax, _enemy.HealthCurrent / _enemy.HealthMax, 0);
-        _enemyHealth.transform.localScale = _healthScale;
+        _healthScale = Enemy.HealthCurrent / Enemy.MaxHealth;
+
+        _enemyHealth.transform.localScale = _healthSize * _healthScale;
     }
 
     public void DeathVisual()

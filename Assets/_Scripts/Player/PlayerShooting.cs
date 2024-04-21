@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerShooting : MonoBehaviour
 {
-    [SerializeField] private float _fireDelay = 0.2f;
+    [SerializeField] private float _fireDelay = 0.2f, _bulletSpeed = 20;
     [SerializeField] private Transform _gun;
     private InputSystem InputSystem;
     private BulletsPool BulletsPool;
@@ -24,7 +24,7 @@ public class PlayerShooting : MonoBehaviour
 
         if (_isShooting && _isAllowedToShoot)
         {
-            BulletsPool.CreateBullet(_gun.position);
+            BulletsPool.CreateBullet(_gun.position, _bulletSpeed);
 
             _isAllowedToShoot = false;
             StartCoroutine(FireDelay());

@@ -3,9 +3,15 @@ using UnityEngine;
 
 public class Player : MonoBehaviour, IDamageable
 {
-    [SerializeField] private Player _player;
-    public static Vector2 PlayerPosition;
-    public static event EventHandler Player_Dead;
+    public Vector2 PlayerPosition { get; private set; }
+    public event EventHandler Player_Dead;
+    public static Player Instance;
+
+    private void Awake()
+    {
+        Instance = this;
+        gameObject.SetActive(true);
+    }
 
     private void Update()
     {
@@ -15,6 +21,6 @@ public class Player : MonoBehaviour, IDamageable
     public void ReceiveDamage()
     {
         Player_Dead?.Invoke(this, EventArgs.Empty);
-        Debug.Log("Dead");
+        gameObject.SetActive(false);
     }
 }

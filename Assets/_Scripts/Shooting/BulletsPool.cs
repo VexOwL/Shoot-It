@@ -19,11 +19,12 @@ public class BulletsPool : MonoBehaviour
         _pool.AutoExpand = _autoExpand;
     }
 
-    public void CreateBullet(Vector2 position)
+    public void CreateBullet(Vector2 position, float speed)
     {
         var bullet = _pool.GetFreeElement();
         bullet.transform.position = position;
         bullet.transform.rotation = transform.rotation;
+        bullet.Speed = speed;
     }
 
     public void ReturnBullet(Bullet bullet)

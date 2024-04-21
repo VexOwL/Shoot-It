@@ -3,25 +3,26 @@ using UnityEngine;
 
 public abstract class Enemy : MonoBehaviour, IDamageable
 {
-    [SerializeField] private float _speed = 0.1f, _health = 5;
+    public float Speed = 0.1f, MaxHealth = 5;
     [NonSerialized] public bool IsAlive = false;
     [NonSerialized] public Rigidbody2D EnemyRb;
-    private Vector2 _enemyPosition, _moveVector;
+    public bool PlayerIsAlive {get; private set;}
     public float HealthCurrent {get; private set;}
-    public float HealthMax {get; private set;}
-    public float Speed {get; private set;}
+    private Vector2 _enemyPosition, _moveVector;
 
     public virtual void Start()
     {
-        Speed = _speed;
-        HealthMax = _health;
-        HealthCurrent = _health;
+        HealthCurrent = MaxHealth;
+
+        PlayerIsAlive = true;
+        Player.Instance.Player_Dead += Player_Dead;
+
+        LevelManager.Instance.EnemiesCount++;
     }
-    
-    private void FixedUpdate()
+
+    private void Player_Dead(object sender, EventArgs e)
     {
-        if (IsAlive)
-            Move();
+        PlayerIsAlive = false;
     }
 
     public virtual void Update()
@@ -31,6 +32,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable
             if (HealthCurrent <= 0)
             {
                 IsAlive = false;
+                LevelManager.Instance.EnemiesCount--;
             }
         }
     }
@@ -38,13 +40,18 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     public virtual void Move()
     {
         _enemyPosition = transform.position;
-        _moveVector = (Player.PlayerPosition - _enemyPosition).normalized;
-        EnemyRb.AddForce(_moveVector * _speed, ForceMode2D.Impulse);
+        _moveVector = (Player.Instance.PlayerPosition - _enemyPosition).normalized;
+        EnemyRb.AddForce(_moveVector * Speed);
     }
 
     public void ReceiveDamage()
     {
         if(HealthCurrent > 0)
             HealthCurrent--;
+    }
+
+    private void OnDisable()
+    {
+        Player.Instance.Player_Dead -= Player_Dead;
     }
 }

@@ -1,10 +1,9 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
 public class EnemyShooter : Enemy
 {
-    [SerializeField] private float _fireDelay = 0.6f;
+    [SerializeField] private float _fireDelay = 0.6f, _bulletSpeed = 5;
     [SerializeField] private Transform _gun;
     private Vector2 _backDirection, _playerDirection, _position;
     private bool _isAllowedToShoot = true;
@@ -25,25 +24,32 @@ public class EnemyShooter : Enemy
 
         Collider.enabled = IsAlive;
 
-        if (_isAllowedToShoot && IsAlive)
+        if (_isAllowedToShoot && IsAlive && PlayerIsAlive)
         {
-            BulletsPool.CreateBullet(_gun.position);
+            BulletsPool.CreateBullet(_gun.position, _bulletSpeed);
 
             _isAllowedToShoot = false;
             StartCoroutine(Shoot());
         }
     }
 
+    private void FixedUpdate()
+    {
+        if (IsAlive)
+            Move();
+    }
+
     public override void Move()
     {
-        transform.right = Player.PlayerPosition - _position;
-
         _position = transform.position;
-        _backDirection = (_position - Player.PlayerPosition).normalized;
-        _playerDirection = (Player.PlayerPosition - _position).normalized;
-        float distance = Vector2.Distance(Player.PlayerPosition, transform.position);
 
-        if(distance > 8)
+        transform.right = Player.Instance.PlayerPosition - _position;
+
+        _backDirection = (_position - Player.Instance.PlayerPosition).normalized;
+        _playerDirection = (Player.Instance.PlayerPosition - _position).normalized;
+        float distance = Vector2.Distance(Player.Instance.PlayerPosition, transform.position);
+
+        if (distance > 8)
         {
             EnemyRb.AddForce(_playerDirection * Speed);
         }
