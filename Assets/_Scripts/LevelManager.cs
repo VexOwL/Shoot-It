@@ -16,7 +16,7 @@ public class LevelManager : MonoBehaviour
 
         _deathScreen.SetActive(false);
 
-        _levelsFinished = PlayerPrefs.GetInt("Levels_Finished");
+        _levelsFinished = PlayerPrefs.GetInt(String.Levels_Finished);
     }
 
     private void Start()
@@ -34,9 +34,9 @@ public class LevelManager : MonoBehaviour
             _victoryScreen.SetActive(true);
             LevelFinished = true;
 
-            if (_currentScene >= _levelsFinished)
+            if (_currentScene > _levelsFinished)
             {
-                PlayerPrefs.SetInt("Levels_Finished", _currentScene);
+                PlayerPrefs.SetInt(String.Levels_Finished, _currentScene);
                 PlayerPrefs.Save();
             }
         }

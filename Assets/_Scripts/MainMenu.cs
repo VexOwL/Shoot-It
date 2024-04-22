@@ -13,7 +13,7 @@ public class MainMenu : MonoBehaviour
 
     private void Start()
     {
-        _levelsFinished = PlayerPrefs.GetInt("Levels_Finished");
+        _levelsFinished = PlayerPrefs.GetInt(String.Levels_Finished);
 
         if (_levelsFinished < 5)
         {

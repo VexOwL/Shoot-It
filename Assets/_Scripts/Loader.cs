@@ -6,10 +6,10 @@ public class Loader : MonoBehaviour
 {
     public enum Scene { MainMenu = 0, Level1 = 1, Level2 = 2, Level3 = 3, Level4 = 4, Level5 = 5 }
 
-    public event EventHandler<SceneChangedEventArgs> SceneChanged;
+    public event EventHandler<SceneChangedEventArgs> SceneLoading;
     public class SceneChangedEventArgs : EventArgs
     {
-        public Scene targetScene;
+        public Scene TargetScene;
     }
 
     public static Loader Instance;
@@ -29,8 +29,7 @@ public class Loader : MonoBehaviour
     public void LoadScene(Scene targetScene)
     {
         SceneManager.LoadScene(targetScene.ToString());
-        SceneChanged?.Invoke(this, new SceneChangedEventArgs {targetScene = targetScene});
-        Debug.Log("Loader. Event");
+        SceneLoading?.Invoke(this, new SceneChangedEventArgs {TargetScene = targetScene});
     }
 
     public static Scene GetCurrentScene()

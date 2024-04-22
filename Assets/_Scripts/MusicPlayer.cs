@@ -1,5 +1,6 @@
-using System;
+using UnityEngine.SceneManagement;
 using UnityEngine;
+using System;
 
 public class MusicPlayer : MonoBehaviour
 {
@@ -28,14 +29,28 @@ public class MusicPlayer : MonoBehaviour
 
     private void Start()
     {
-        Loader.Instance.SceneChanged += Scene_Changed;
+        Loader.Instance.SceneLoading += Scene_Loading;
+        OptionsUI.Instance.MusicVolumeChanged += MusicVolume_Changed;
+        SceneManager.activeSceneChanged += Scene_Changed;
+
+        AudioSource.volume = PlayerPrefs.GetFloat(String.Music_Volume, 0.2f);
     }
 
-    private void Scene_Changed(object sender, Loader.SceneChangedEventArgs eventArgs)
+    private void Scene_Changed(Scene arg0, Scene arg1)
     {
-        Loader.Scene currentScene = eventArgs.targetScene;
+        Update_Event();
+    }
 
-        Debug.Log($"MusicPlayer. Current Scene: {currentScene}");
+    private void MusicVolume_Changed(object sender, OptionsUI.MusicVolumeChangedEventArgs eventArgs)
+    {
+        Debug.Log($"Player. Recieved volume: {eventArgs.MusicVolume}");
+
+        AudioSource.volume = eventArgs.MusicVolume;
+    }
+
+    private void Scene_Loading(object sender, Loader.SceneChangedEventArgs eventArgs)
+    {   
+        Loader.Scene currentScene = eventArgs.TargetScene;
 
         if (currentScene == Loader.Scene.MainMenu)
         {
@@ -61,5 +76,11 @@ public class MusicPlayer : MonoBehaviour
             AudioSource.Play();
             _currentTrack = music;
         }
+    }
+
+    private void Update_Event()
+    {
+        OptionsUI.Instance.MusicVolumeChanged -= MusicVolume_Changed;
+        OptionsUI.Instance.MusicVolumeChanged += MusicVolume_Changed;
     }
 }
