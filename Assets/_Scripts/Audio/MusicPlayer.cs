@@ -38,13 +38,11 @@ public class MusicPlayer : MonoBehaviour
 
     private void Scene_Changed(Scene arg0, Scene arg1)
     {
-        Update_Event();
+        Update_Events();
     }
 
     private void MusicVolume_Changed(object sender, OptionsUI.MusicVolumeChangedEventArgs eventArgs)
     {
-        Debug.Log($"Player. Recieved volume: {eventArgs.MusicVolume}");
-
         AudioSource.volume = eventArgs.MusicVolume;
     }
 
@@ -78,7 +76,7 @@ public class MusicPlayer : MonoBehaviour
         }
     }
 
-    private void Update_Event()
+    private void Update_Events()
     {
         OptionsUI.Instance.MusicVolumeChanged -= MusicVolume_Changed;
         OptionsUI.Instance.MusicVolumeChanged += MusicVolume_Changed;

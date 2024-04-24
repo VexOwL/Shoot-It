@@ -9,6 +9,7 @@ public class PlayerShooting : MonoBehaviour
     private InputSystem InputSystem;
     private BulletsPool BulletsPool;
     private bool _isShooting, _isAllowedToShoot = true;
+    public static event EventHandler PlayerShot;
 
     private void Awake()
     {
@@ -25,6 +26,8 @@ public class PlayerShooting : MonoBehaviour
         if (_isShooting && _isAllowedToShoot)
         {
             BulletsPool.CreateBullet(_gun.position, _bulletSpeed);
+            PlayerShot?.Invoke(this, EventArgs.Empty);
+
 
             _isAllowedToShoot = false;
             StartCoroutine(FireDelay());

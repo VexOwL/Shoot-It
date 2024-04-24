@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class MainMenu : MonoBehaviour
@@ -5,6 +6,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject _options;
     [SerializeField] private GameObject[] _levelsLockedImages;
     private int _levelsFinished;
+    public static event EventHandler ButtonPressed;
 
     private void Awake()
     {
@@ -15,28 +17,31 @@ public class MainMenu : MonoBehaviour
     {
         _levelsFinished = PlayerPrefs.GetInt(String.Levels_Finished);
 
-        if (_levelsFinished < 5)
+        for (int i = 0; i < _levelsFinished - 1; i++)
         {
-            for (int i = 0; i <= _levelsFinished - 1; i++)
-            {
-                _levelsLockedImages[i].SetActive(false);
-            }
+            _levelsLockedImages[i].SetActive(false);
         }
     }
 
     public void Show_Options()
     {
         _options.SetActive(true);
+
+        ButtonPressed?.Invoke(this, EventArgs.Empty);
     }
 
     public void Quit_Game()
     {
         Application.Quit();
+
+        ButtonPressed?.Invoke(this, EventArgs.Empty);
     }
 
     public void Load_Level1()
     {
         Loader.Instance.LoadScene(Loader.Scene.Level1);
+
+        ButtonPressed?.Invoke(this, EventArgs.Empty);
     }
 
     public void Load_Level2()
@@ -44,6 +49,8 @@ public class MainMenu : MonoBehaviour
         if (_levelsFinished >= 1)
         {
             Loader.Instance.LoadScene(Loader.Scene.Level2);
+
+            ButtonPressed?.Invoke(this, EventArgs.Empty);
         }
     }
 
@@ -53,6 +60,8 @@ public class MainMenu : MonoBehaviour
         {
             Loader.Instance.LoadScene(Loader.Scene.Level3);
         }
+
+        ButtonPressed?.Invoke(this, EventArgs.Empty);
     }
 
     public void Load_Level4()
@@ -61,6 +70,8 @@ public class MainMenu : MonoBehaviour
         {
             Loader.Instance.LoadScene(Loader.Scene.Level4);
         }
+
+        ButtonPressed?.Invoke(this, EventArgs.Empty);
     }
 
     public void Load_Level5()
@@ -69,5 +80,7 @@ public class MainMenu : MonoBehaviour
         {
             Loader.Instance.LoadScene(Loader.Scene.Level5);
         }
+
+        ButtonPressed?.Invoke(this, EventArgs.Empty);
     }
 }

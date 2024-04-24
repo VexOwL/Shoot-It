@@ -6,7 +6,7 @@ public class LevelManager : MonoBehaviour
 {
     [SerializeField] private GameObject _deathScreen, _victoryScreen;
     [NonSerialized] public bool LevelFinished = false;
-    public float EnemiesCount = 0;
+    [NonSerialized] public float EnemiesCount = 0;
     private int _currentScene, _levelsFinished = 0;
     public static LevelManager Instance;
 
@@ -21,7 +21,7 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
-        Player.Instance.Player_Dead += Player_Dead;
+        Player.PlayerDead += Player_Dead;
 
         _currentScene = SceneManager.GetActiveScene().buildIndex;
         LevelFinished = false;
@@ -52,6 +52,6 @@ public class LevelManager : MonoBehaviour
 
     private void OnDisable()
     {
-        Player.Instance.Player_Dead -= Player_Dead;
+        Player.PlayerDead -= Player_Dead;
     }
 }

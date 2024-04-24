@@ -7,9 +7,9 @@ public class OptionsUI : MonoBehaviour
     [SerializeField] private Slider _musicSlider;
     [SerializeField] private GameObject _options;
     public static OptionsUI Instance;
+    public static event EventHandler ButtonPressed;
 
     public event EventHandler<MusicVolumeChangedEventArgs> MusicVolumeChanged;
-
     public class MusicVolumeChangedEventArgs : EventArgs
     {
         public float MusicVolume;
@@ -22,7 +22,6 @@ public class OptionsUI : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log($"PlayerPrefs. Music_Volume: {PlayerPrefs.GetFloat(String.Music_Volume, 0.2f)}");
         _musicSlider.value = PlayerPrefs.GetFloat(String.Music_Volume, 0.2f) * 10;
 
         _options.SetActive(false);
@@ -32,16 +31,22 @@ public class OptionsUI : MonoBehaviour
     public void Fullscreen_Toggle()
     {
         Screen.fullScreen = !Screen.fullScreen;
+
+        ButtonPressed?.Invoke(this, EventArgs.Empty);
     }
 
     public void Options_Exit()
     {
         _options.SetActive(false);
+
+        ButtonPressed?.Invoke(this, EventArgs.Empty);
     }
 
     public void Delete_PlayerPrefs()
     {
         PlayerPrefs.DeleteAll();
+
+        ButtonPressed?.Invoke(this, EventArgs.Empty);
     }
 
     public void Update_MusicVolume()
@@ -51,7 +56,10 @@ public class OptionsUI : MonoBehaviour
         PlayerPrefs.SetFloat(String.Music_Volume, musicVolume);
         PlayerPrefs.Save();
         MusicVolumeChanged?.Invoke(this, new MusicVolumeChangedEventArgs { MusicVolume = musicVolume });
+    }
 
-        Debug.Log($"OptionsUI. Volume: {musicVolume}");
+    public void Button_PlaySound()
+    {
+        ButtonPressed?.Invoke(this, EventArgs.Empty);
     }
 }

@@ -9,13 +9,14 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     public bool PlayerIsAlive {get; private set;}
     public float HealthCurrent {get; private set;}
     private Vector2 _enemyPosition, _moveVector;
+    public static event EventHandler EnemyDead;
 
     public virtual void Start()
     {
         HealthCurrent = MaxHealth;
 
         PlayerIsAlive = true;
-        Player.Instance.Player_Dead += Player_Dead;
+        Player.PlayerDead += Player_Dead;
 
         LevelManager.Instance.EnemiesCount++;
     }
@@ -33,6 +34,8 @@ public abstract class Enemy : MonoBehaviour, IDamageable
             {
                 IsAlive = false;
                 LevelManager.Instance.EnemiesCount--;
+                EnemyDead?.Invoke(this, EventArgs.Empty);
+
             }
         }
     }
@@ -52,6 +55,6 @@ public abstract class Enemy : MonoBehaviour, IDamageable
 
     private void OnDisable()
     {
-        Player.Instance.Player_Dead -= Player_Dead;
+        Player.PlayerDead -= Player_Dead;
     }
 }

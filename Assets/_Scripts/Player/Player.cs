@@ -4,7 +4,7 @@ using UnityEngine;
 public class Player : MonoBehaviour, IDamageable
 {
     public Vector2 PlayerPosition { get; private set; }
-    public event EventHandler Player_Dead;
+    public static event EventHandler PlayerDead;
     public static Player Instance;
 
     private void Awake()
@@ -20,7 +20,7 @@ public class Player : MonoBehaviour, IDamageable
 
     public void ReceiveDamage()
     {
-        Player_Dead?.Invoke(this, EventArgs.Empty);
+        PlayerDead?.Invoke(this, EventArgs.Empty);
         gameObject.SetActive(false);
     }
 }
