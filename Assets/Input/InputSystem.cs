@@ -171,7 +171,7 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""03be31d4-8b13-4106-bbe2-9399cfcb4fe2"",
-                    ""path"": ""<Keyboard>/#(R)"",
+                    ""path"": ""<Keyboard>/r"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

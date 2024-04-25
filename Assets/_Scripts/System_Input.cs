@@ -3,9 +3,10 @@ using UnityEngine.SceneManagement;
 
 public class System_Input : MonoBehaviour
 {
-    [SerializeField] private GameObject _pauseScreen;
+    [SerializeField] private GameObject _pauseScreen, _creditScreen;
     private Loader.Scene _currentScene;
     private InputSystem InputSystem;
+    private bool _creditsShown = false;
 
     private void Awake()
     {
@@ -13,6 +14,7 @@ public class System_Input : MonoBehaviour
         InputSystem.System.Enable();
 
         _pauseScreen.SetActive(false);
+        _creditScreen.SetActive(false);
     }
 
     private void Start()
@@ -70,8 +72,13 @@ public class System_Input : MonoBehaviour
                     break;
 
                 case Loader.Scene.Level5:
-                    Loader.Instance.LoadScene(Loader.Scene.MainMenu);
+                    _creditScreen.SetActive(true);
+                    _creditsShown = true;
                     break;
+            }
+            if (_creditsShown)
+            {
+                Loader.Instance.LoadScene(Loader.Scene.MainMenu);
             }
         }
     }

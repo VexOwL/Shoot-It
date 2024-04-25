@@ -39,6 +39,17 @@ public class OptionsUI : MonoBehaviour
     {
         Screen.fullScreen = !Screen.fullScreen;
 
+        if(Screen.fullScreen)
+        {
+            PlayerPrefs.SetInt(String.Fullscreen_On, 1);
+        }
+        else
+        {
+            PlayerPrefs.SetInt(String.Fullscreen_On, 0);
+        }
+
+        PlayerPrefs.Save();
+
         ButtonPressed?.Invoke(this, EventArgs.Empty);
     }
 

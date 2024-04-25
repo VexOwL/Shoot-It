@@ -35,7 +35,6 @@ public abstract class Enemy : MonoBehaviour, IDamageable
                 IsAlive = false;
                 LevelManager.Instance.EnemiesCount--;
                 EnemyDead?.Invoke(this, EventArgs.Empty);
-
             }
         }
     }
