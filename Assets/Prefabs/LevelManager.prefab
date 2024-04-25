@@ -512,7 +512,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6675560030832202253
 RectTransform:
   m_ObjectHideFlags: 0
@@ -798,7 +798,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _deathScreen: {fileID: 8490559777754792248}
   _victoryScreen: {fileID: 8114266561025003861}
-  EnemiesCount: 0
 --- !u!114 &3864458147928941719
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1912,7 +1911,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 581882024901314770, guid: 857d059278b07a5479556167652600d4, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2375759363106253738, guid: 857d059278b07a5479556167652600d4, type: 3}
       propertyPath: m_AnchorMax.x
@@ -2008,7 +2007,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4163513827025101863, guid: 857d059278b07a5479556167652600d4, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4764702274134282397, guid: 857d059278b07a5479556167652600d4, type: 3}
       propertyPath: m_AnchorMax.x

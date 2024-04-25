@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class OptionsUI : MonoBehaviour
 {
-    [SerializeField] private Slider _musicSlider;
+    [SerializeField] private Slider _musicSlider, _soundSlider;
     [SerializeField] private GameObject _options;
     public static OptionsUI Instance;
     public static event EventHandler ButtonPressed;
@@ -15,6 +15,12 @@ public class OptionsUI : MonoBehaviour
         public float MusicVolume;
     }
 
+    public event EventHandler<SoundVolumeChangedEventArgs> SoundVolumeChanged;
+    public class SoundVolumeChangedEventArgs : EventArgs
+    {
+        public float SoundVolume;
+    }
+
     private void Awake()
     {
         Instance = this;
@@ -23,6 +29,7 @@ public class OptionsUI : MonoBehaviour
     private void Start()
     {
         _musicSlider.value = PlayerPrefs.GetFloat(String.Music_Volume, 0.2f) * 10;
+        _soundSlider.value = PlayerPrefs.GetFloat(String.Sound_Volume, 0.5f) * 10;
 
         _options.SetActive(false);
         gameObject.SetActive(true);
@@ -56,6 +63,15 @@ public class OptionsUI : MonoBehaviour
         PlayerPrefs.SetFloat(String.Music_Volume, musicVolume);
         PlayerPrefs.Save();
         MusicVolumeChanged?.Invoke(this, new MusicVolumeChangedEventArgs { MusicVolume = musicVolume });
+    }
+
+    public void Update_SoundVolume()
+    {
+        float soundVolume = _soundSlider.value / 10;
+
+        PlayerPrefs.SetFloat(String.Sound_Volume, soundVolume);
+        PlayerPrefs.Save();
+        SoundVolumeChanged?.Invoke(this, new SoundVolumeChangedEventArgs { SoundVolume = soundVolume });
     }
 
     public void Button_PlaySound()

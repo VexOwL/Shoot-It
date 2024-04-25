@@ -352,7 +352,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Speed: 5
   MaxHealth: 3
-  _fireDelay: 0.5
+  _fireDelay: 0.6
   _bulletSpeed: 6
   _gun: {fileID: 3289683698160074601}
 --- !u!114 &4124081525612577029

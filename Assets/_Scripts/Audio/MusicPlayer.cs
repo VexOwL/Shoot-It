@@ -10,6 +10,7 @@ public class MusicPlayer : MonoBehaviour
     private AudioSource AudioSource;
     private AudioClip _currentTrack;
     public static MusicPlayer Instance;
+    private float _volumeScale = 0.2f;
 
     private void Awake()
     {
@@ -33,7 +34,7 @@ public class MusicPlayer : MonoBehaviour
         OptionsUI.Instance.MusicVolumeChanged += MusicVolume_Changed;
         SceneManager.activeSceneChanged += Scene_Changed;
 
-        AudioSource.volume = PlayerPrefs.GetFloat(String.Music_Volume, 0.2f);
+        AudioSource.volume = PlayerPrefs.GetFloat(String.Music_Volume, 0.2f) * _volumeScale;
     }
 
     private void Scene_Changed(Scene arg0, Scene arg1)
@@ -43,7 +44,7 @@ public class MusicPlayer : MonoBehaviour
 
     private void MusicVolume_Changed(object sender, OptionsUI.MusicVolumeChangedEventArgs eventArgs)
     {
-        AudioSource.volume = eventArgs.MusicVolume;
+        AudioSource.volume = eventArgs.MusicVolume * _volumeScale;
     }
 
     private void Scene_Loading(object sender, Loader.SceneChangedEventArgs eventArgs)

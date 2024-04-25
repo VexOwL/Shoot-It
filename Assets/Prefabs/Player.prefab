@@ -77,7 +77,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _fireDelay: 0.2
-  _bulletSpeed: 30
+  _bulletSpeed: 50
   _gun: {fileID: 7018063692057845954}
 --- !u!114 &4866268296485217870
 MonoBehaviour:

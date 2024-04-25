@@ -49,6 +49,7 @@ MonoBehaviour:
   _levelChange: {fileID: 8300000, guid: 6d5c9127be2934d47ace8ea8914c05be, type: 3}
   _enemyDeath: {fileID: 8300000, guid: 52dea11e84e5cac419b3911f867a7a2f, type: 3}
   _playerDeath: {fileID: 8300000, guid: b99da9a57308d4ba1bee1cf1d9038376, type: 3}
+  _gunShot: {fileID: 8300000, guid: 60a0682fbc82bd244bdae3f3445cfd17, type: 3}
 --- !u!82 &5139146328449916339
 AudioSource:
   m_ObjectHideFlags: 0
