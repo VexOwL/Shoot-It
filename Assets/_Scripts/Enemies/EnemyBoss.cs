@@ -40,14 +40,7 @@ public class EnemyBoss : Enemy
 
         yield return new WaitForSeconds(_timeOnPostion);
 
-        if (_nextPosition < _positions.Length - 1)
-        {
-            _nextPosition++;
-        }
-        else
-        {
-            _nextPosition = 0;
-        }
+        _nextPosition = Random.Range(0, _positions.Length);
 
         _moveAllowed = true;
     }

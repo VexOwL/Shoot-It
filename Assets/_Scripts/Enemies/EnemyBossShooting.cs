@@ -4,8 +4,8 @@ using UnityEngine;
 public class EnemyBossShooting : MonoBehaviour
 {
     [SerializeField] private Enemy _boss;
-    [SerializeField] private float _fireDelay = 0.6f, _bulletSpeed = 15;
-    [SerializeField] private Transform _gun;
+    [SerializeField] private float _fireDelay, _bulletSpeed;
+    [SerializeField] private Transform[] _guns;
     private bool _shootAllowed = true;
     private BulletsPool BulletsPool;
 
@@ -18,7 +18,10 @@ public class EnemyBossShooting : MonoBehaviour
     {
         if (_shootAllowed && _boss.IsAlive && _boss.PlayerIsAlive)
         {
-            BulletsPool.CreateBullet(_gun.position, _bulletSpeed);
+            foreach (var gun in _guns)
+            {
+                BulletsPool.CreateBullet(gun.position, _bulletSpeed);
+            }
 
             _shootAllowed = false;
             StartCoroutine(Shoot());

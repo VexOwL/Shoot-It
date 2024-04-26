@@ -25,16 +25,22 @@ public class EnemyBasic : Enemy
 
     public void OnCollisionEnter2D(Collision2D other)
     {
-        float pushForce = 2;
+        float pushForce = 5;
 
         if (other.gameObject.GetComponent<Player>())
         {
             Player player = other.gameObject.GetComponent<Player>();
             player.ReceiveDamage();
         }
-        else if (!other.gameObject.GetComponent<Bullet>())
+        else
         {
-            EnemyRb.AddForce((transform.position - other.transform.position) * pushForce, ForceMode2D.Impulse);
+            PushAway(other.transform.position, pushForce);
         }
+    }
+
+    public void PushAway(Vector3 pushPoint, float pushForce)
+    {
+
+        EnemyRb.AddForce((transform.position - pushPoint) * pushForce, ForceMode2D.Impulse);
     }
 }

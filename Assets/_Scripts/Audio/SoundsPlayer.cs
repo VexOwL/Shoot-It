@@ -51,7 +51,7 @@ public class SoundsPlayer : MonoBehaviour
 
     private void Player_Shot(object sender, EventArgs e)
     {
-        AudioSource.PlayOneShot(_gunShot, 0.4f);
+        AudioSource.PlayOneShot(_gunShot, 0.3f);
     }
 
     private void Enemy_Dead(object sender, EventArgs e)
@@ -61,7 +61,7 @@ public class SoundsPlayer : MonoBehaviour
 
     private void Player_Dead(object sender, EventArgs e)
     {
-        AudioSource.PlayOneShot(_playerDeath, 1.25f);
+        AudioSource.PlayOneShot(_playerDeath, 1.5f);
     }
 
     private void SoundVolume_Changed(object sender, OptionsUI.SoundVolumeChangedEventArgs eventArgs)

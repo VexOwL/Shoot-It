@@ -47,6 +47,11 @@ public class System_Input : MonoBehaviour
             _pauseScreen.SetActive(false);
             Time.timeScale = 1;
         }
+
+        if (_creditsShown)
+        {
+            Loader.Instance.LoadScene(Loader.Scene.MainMenu);
+        }
     }
 
     private void Input_Continue(UnityEngine.InputSystem.InputAction.CallbackContext context)
@@ -75,10 +80,6 @@ public class System_Input : MonoBehaviour
                     _creditScreen.SetActive(true);
                     _creditsShown = true;
                     break;
-            }
-            if (_creditsShown)
-            {
-                Loader.Instance.LoadScene(Loader.Scene.MainMenu);
             }
         }
     }

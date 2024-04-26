@@ -3,41 +3,71 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    [SerializeField] private Transform _bulletVisual;
-    [SerializeField] private LayerMask _layerMask;
-    [NonSerialized] public float Speed = 20;
-    private Vector2 _castDirection = Vector2.zero, _bulletSize;
-    private float _castDistance = 0;
+    [SerializeField] private Target _target;
+    [NonSerialized] public float Speed = 1;
+    private float _destroyDistance = 15;
+    private Rigidbody2D rb;
+
+    private enum Target { Player, Enemy }
 
     public void Start()
     {
-        _bulletSize = _bulletVisual.localScale;
+        rb = GetComponent<Rigidbody2D>();
     }
 
     private void FixedUpdate()
     {
-        transform.Translate(Speed * Time.fixedDeltaTime, 0, 0);
-    }
+        rb.AddForce(transform.right * Speed, ForceMode2D.Impulse);
 
-    private void Update()
-    {
-        Raycast();
-    }
-
-    public void Raycast()
-    {
-        RaycastHit2D castHit = Physics2D.CapsuleCast(transform.position, _bulletSize, CapsuleDirection2D.Horizontal, transform.rotation.z, _castDirection, _castDistance, _layerMask);
-        Collider2D hitCollider = castHit.collider;
-
-        if (hitCollider != null)
+        if (Vector3.Distance(Vector3.zero, transform.position) > _destroyDistance)
         {
-            if (hitCollider.TryGetComponent(out IDamageable target))
+            ReturnBullet();
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (_target == Target.Enemy)
+        {
+            if (other.gameObject.GetComponent<Enemy>())
             {
-                target.ReceiveDamage();
+                Enemy enemy = other.gameObject.GetComponent<Enemy>();
+
+                enemy.ReceiveDamage();
             }
 
-            gameObject.SetActive(false);
-            BulletsPool.Instance.ReturnBullet(this);
+            if (!other.gameObject.GetComponent<Player>() && !other.gameObject.GetComponent<Bullet>())
+            {
+                ReturnBullet();
+            }
         }
+        else if (_target == Target.Player)
+        {
+            if (other.gameObject.GetComponent<Player>())
+            {
+                Player player = other.gameObject.GetComponent<Player>();
+
+                player.ReceiveDamage();
+            }
+
+            if (!other.gameObject.GetComponent<EnemyShooter>() && !other.gameObject.GetComponent<EnemyBoss>() && !other.gameObject.GetComponent<Bullet>())
+            {
+                ReturnBullet();
+            }
+        }
+
+        if(other.gameObject.GetComponent<EnemyBasic>())
+        {
+            EnemyBasic enemy = other.gameObject.GetComponent<EnemyBasic>();
+
+            float pushForce = 1;
+            enemy.PushAway(transform.position, pushForce);
+        }
+    }
+
+    private void ReturnBullet()
+    {
+        gameObject.SetActive(false);
+        BulletsPool.Instance.ReturnBullet(this);
     }
 }
